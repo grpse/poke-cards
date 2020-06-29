@@ -7,9 +7,12 @@ type PokemonsReducerState = {
     pokemons: Pokemon[]
 }
 
-type PokemonsReducerAction = {
+export type PokemonsReducerAction = {
     type: string
-    payload: any
+    payload: {
+        pokemonsList?: Pokemon[]
+        pokemonUpdateData?: Pokemon
+    }
 }
 
 const initialState : PokemonsReducerState = {
@@ -21,28 +24,32 @@ export default function pokemons(state = initialState, action : PokemonsReducerA
         case POKEMONS_REDUCER_SET_LOADED: {
             return {
                 ...state,
-                pokemons: action.payload as Pokemon[]
+                pokemons: action.payload.pokemonsList || state.pokemons
             }
         }
 
         case POKEMONS_REDUCER_UPDATE: {
-            const pokemonUpdateData = action.payload as Pokemon
-            
-            const pokemonsNewList = state.pokemons.map(p => {
-                if (p.number === pokemonUpdateData.number) {
-                    return {
-                        ...p,
-                        name: pokemonUpdateData.name,
-                        attacks: pokemonUpdateData.attacks,
+            const pokemonUpdateData = action.payload.pokemonUpdateData
+
+            if (pokemonUpdateData) {
+                const pokemonsNewList = state.pokemons.map(p => {
+                    if (p.number === pokemonUpdateData.number) {
+                        return {
+                            ...p,
+                            name: pokemonUpdateData.name,
+                            attacks: pokemonUpdateData.attacks,
+                        }
+                    } else {
+                        return p
                     }
-                } else {
-                    return p
+                })
+                return {
+                    ...state,
+                    pokemons: pokemonsNewList
                 }
-            })
-            return {
-                ...state,
-                pokemons: pokemonsNewList
-            }
+            } else {
+                return state
+            }            
         }
     }
 }
