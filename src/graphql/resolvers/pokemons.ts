@@ -3,16 +3,22 @@ import { InMemoryCache, ApolloClient } from "apollo-boost"
 import { POKEMONS_LOCAL } from "../queries/PokemonsLocal"
 import { POKEMONS } from '../queries/Pokemons'
 import { CacheDataType } from "../createApolloClient"
+import { GET_FIRST_FIELD_FROM_LOCAL } from "../queries/GetFirstFieldFromLocal"
 
 export async function pokemons(_ : any, { first } : { first : number }, { cache, client } : { cache : InMemoryCache, client : ApolloClient<any>}) {
                     
     let cachedData : CacheDataType | null = null
 
     try {
-        cachedData = cache.readQuery({ query: POKEMONS_LOCAL, variables: { first } })
+        const previousFirstData : { first : number } | null = cache.readQuery({ query: GET_FIRST_FIELD_FROM_LOCAL })
 
-        if (first === cachedData?.first) {
-            return cachedData.pokemons
+        if (previousFirstData?.first === first) {
+
+            cachedData = cache.readQuery({ query: POKEMONS_LOCAL, variables: { first } })
+    
+            if (first === cachedData?.first) {
+                return cachedData.pokemons
+            }
         }
 
     } catch(e) {

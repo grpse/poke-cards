@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles'
 import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile'
@@ -11,6 +11,7 @@ import { Container, AppBar } from '@material-ui/core'
 import { FilterToolbar } from './FilterToolbar'
 
 export default function PokemonsList() {
+    const [ hasHitBottom, setHitBottom ] = useState(false)
     const classes = useStyles()
     const history = useHistory()
     const { loading, pokemons, filter, filterParam, loadMore } = usePokemonList()
@@ -22,9 +23,11 @@ export default function PokemonsList() {
         <Container maxWidth='xl' classes={{ root: classes.root }} className={classes.container} onScroll={e => {
             const target = e.target as HTMLDivElement
             const bottom = target.scrollHeight - target.scrollTop === target.clientHeight
-            if (bottom) { 
+            if (bottom && !hasHitBottom) { 
                 loadMore()
             }
+
+            setHitBottom(bottom)
         }}>
             <AppBar position='sticky'>
                 <FilterToolbar filterParam={filterParam} onFilter={filter} />
