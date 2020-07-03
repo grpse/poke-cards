@@ -41,7 +41,7 @@ export default function PokemonDetails() {
         )
     } else {
         return (
-            <Container className={classes.root} maxWidth='md'>
+            <Container className={classes.container} maxWidth='md'>
                 <Card>
                     <CardMedia
                         component='img'
@@ -125,9 +125,10 @@ export default function PokemonDetails() {
 }
 
 const useStyles = makeStyles({
-    root: {
+    container: {
         maxWidth: 600,
-        maxHeight: 600
+        maxHeight: '100%',
+        overflowY: 'auto'
     },
     loaderContainer: {
         position: 'absolute',
