@@ -25,7 +25,7 @@ export function EditingField({ isEditing, value, onChange, onRemove, placeholder
                         root: classes.inputRoot,
                         input: classes.inputInput
                     }} />
-                <IconButton onClick={() => onRemove()} className={classes.removeButton}>
+                <IconButton name='remove-value-button' onClick={() => onRemove()} className={classes.removeButton}>
                     <RemoveIcon />
                 </IconButton>
             </>
