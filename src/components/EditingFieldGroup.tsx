@@ -8,10 +8,11 @@ export type EditingFieldGroupProps = {
     isEditing: boolean
     values: string[]
     onChange(newValues : string[]): void
+    placeholder: string
 }
 
 
-export function EditingFieldGroup({ isEditing, values, onChange } : EditingFieldGroupProps) {
+export function EditingFieldGroup({ isEditing, values, onChange, placeholder } : EditingFieldGroupProps) {
     
     const onChangeValue = (newValue : string, valueIndex : number) => {
         const valuesCopy = [...values]
@@ -38,6 +39,7 @@ export function EditingFieldGroup({ isEditing, values, onChange } : EditingField
             {(values || []).map((value, index) => (
                 <EditingField
                     key={index}
+                    placeholder={placeholder}
                     isEditing={isEditing}
                     value={value}
                     onChange={newValue => onChangeValue(newValue, index)}

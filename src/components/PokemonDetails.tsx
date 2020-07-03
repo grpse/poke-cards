@@ -59,6 +59,7 @@ export default function PokemonDetails() {
                             Type
                         </Typography>
                         <EditingFieldGroup
+                            placeholder={'type'}
                             isEditing={isEditing}
                             values={pokemon?.types}
                             onChange={newTypes => {

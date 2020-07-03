@@ -7,9 +7,10 @@ export type EditingFieldProps = {
     value: string
     onChange(newValue : string): void
     onRemove(): void
+    placeholder: string
 }
 
-export function EditingField({ isEditing, value, onChange, onRemove } : EditingFieldProps) {
+export function EditingField({ isEditing, value, onChange, onRemove, placeholder } : EditingFieldProps) {
     
     const classes = useStyles()
 
@@ -19,7 +20,7 @@ export function EditingField({ isEditing, value, onChange, onRemove } : EditingF
                 <OutlinedInput
                     value={value}
                     onChange={event => onChange(event.target.value)}
-                    placeholder='Type'
+                    placeholder={placeholder}
                     classes={{
                         root: classes.inputRoot,
                         input: classes.inputInput
